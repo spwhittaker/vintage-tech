@@ -31,6 +31,9 @@ export default function App() {
         <Route path="/checkout">
           <Checkout />
         </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
         <Route exact path="/products">
           <Products />
         </Route>
