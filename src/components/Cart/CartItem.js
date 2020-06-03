@@ -2,7 +2,9 @@ import React, { useContext } from "react";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 import { CartContext } from "../../context/cart";
 export default function CartItem({ id, image, title, price, amount }) {
-  const { decreaseAmount } = useContext(CartContext);
+  const { removeItem, increaseAmount, decreaseAmount } = useContext(
+    CartContext
+  );
 
   return (
     <article className="cart-item">
@@ -14,7 +16,7 @@ export default function CartItem({ id, image, title, price, amount }) {
           type="button"
           className="cart-btn remove-btn"
           onClick={() => {
-            console.log("removed item");
+            removeItem(id);
           }}
         >
           Remove
@@ -24,7 +26,7 @@ export default function CartItem({ id, image, title, price, amount }) {
         <button
           type="button"
           className="cart-btn amount-btn"
-          onClick={() => console.log("amount increased")}
+          onClick={() => increaseAmount(id)}
         >
           <FaAngleUp />
         </button>
@@ -32,7 +34,9 @@ export default function CartItem({ id, image, title, price, amount }) {
         <button
           type="button"
           className="cart-btn amount-btn"
-          onClick={decreaseAmount}
+          onClick={() => {
+            decreaseAmount(id, amount);
+          }}
         >
           <FaAngleDown />
         </button>

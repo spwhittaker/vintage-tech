@@ -19,17 +19,44 @@ function CartProvider({ children }) {
       return total + amount * price;
     }, 0);
 
-    newTotal = Number(newTotal.toFixed(2));
+    newTotal = newTotal.toFixed(2);
 
     setTotal(newTotal);
   }, [cart]);
-  const removeItem = (id) => {};
-  const increaseAmount = (id) => {};
-  const decreaseAmount = (id) => {
-    console.log("decreased");
+  const removeItem = (id) => {
+    setCart([...cart].filter((item) => item.id !== id));
   };
-  const addToCart = (product) => {};
-  const clearCart = () => {};
+  const increaseAmount = (id) => {
+    setCart(
+      [...cart].map((item) => {
+        if (item.id === id) {
+          item.amount++;
+        }
+        return item;
+      })
+    );
+  };
+  const decreaseAmount = (id, amount) => {
+    if (amount === 1) {
+      return removeItem(id);
+    } else {
+      setCart(
+        [...cart].map((item) => {
+          if (item.id === id && item.amount > 1) {
+            item.amount--;
+          }
+
+          return item;
+        })
+      );
+    }
+  };
+  const addToCart = (product) => {
+    console.log(product);
+  };
+  const clearCart = () => {
+    setCart([]);
+  };
   return (
     <CartContext.Provider
       value={{
