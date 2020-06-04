@@ -18,8 +18,9 @@ import Alert from "./components/Alert";
 export default function App() {
   return (
     <Router>
-      <Header />
+      <Header></Header>
       <Alert></Alert>
+
       <Switch>
         <Route exact path="/">
           <Home />
