@@ -56,19 +56,13 @@ function CartProvider({ children }) {
     }
   };
   const addToCart = (product) => {
-    const {
-      id,
-      title,
-      price,
-      image: { url },
-      amount,
-    } = product;
+    const { id, title, price, image, amount } = product;
     const item = [...cart].find((item) => item.id === id);
     if (item) {
       increaseAmount(id);
       return;
     } else {
-      setCart([...cart, { id, title, price, image: url, amount: 1 }]);
+      setCart([...cart, { id, title, price, image, amount: 1 }]);
     }
   };
   const clearCart = () => {
