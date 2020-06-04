@@ -1,15 +1,19 @@
 import React, { createContext, useState, useEffect } from "react";
 import localCart from "../utils/localCart";
-
+function getCartFromLocalStorage() {
+  return localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [];
+}
 const CartContext = createContext();
 
 function CartProvider({ children }) {
-  const [cart, setCart] = useState(localCart);
+  const [cart, setCart] = useState(getCartFromLocalStorage());
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState(0);
 
   useEffect(() => {
-    console.log("cart changed");
+    localStorage.setItem("cart", JSON.stringify(cart));
     let newCartItems = cart.reduce((total, cartItem) => {
       return total + cartItem.amount;
     }, 0);
@@ -52,7 +56,20 @@ function CartProvider({ children }) {
     }
   };
   const addToCart = (product) => {
-    console.log(product);
+    const {
+      id,
+      title,
+      price,
+      image: { url },
+      amount,
+    } = product;
+    const item = [...cart].find((item) => item.id === id);
+    if (item) {
+      increaseAmount(id);
+      return;
+    } else {
+      setCart([...cart, { id, title, price, image: url, amount: 1 }]);
+    }
   };
   const clearCart = () => {
     setCart([]);

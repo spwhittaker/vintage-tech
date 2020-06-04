@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function Cart() {
   let user = false;
-  const { cart, total } = useContext(CartContext);
+  const { cart, total, clearCart } = useContext(CartContext);
 
   if (cart.length === 0) {
     return <EmptyCart />;
@@ -28,6 +28,15 @@ export default function Cart() {
           login
         </Link>
       )}
+      <br />
+      <button
+        className="btn btn-primary btn-block"
+        onClick={() => {
+          clearCart();
+        }}
+      >
+        Clear cart
+      </button>
     </section>
   );
 }
