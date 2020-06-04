@@ -1,5 +1,5 @@
 // register user
-import React from "react";
+
 import axios from "axios";
 import url from "../utils/URL";
 async function registerUser({ username, email, password }) {

@@ -13,11 +13,13 @@ import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
 
 import Header from "./components/Header";
+import Alert from "./components/Alert";
 
 export default function App() {
   return (
     <Router>
       <Header />
+      <Alert></Alert>
       <Switch>
         <Route exact path="/">
           <Home />

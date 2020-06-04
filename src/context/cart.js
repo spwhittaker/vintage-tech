@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import localCart from "../utils/localCart";
+//import localCart from "../utils/localCart";
 function getCartFromLocalStorage() {
   return localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
@@ -56,7 +56,7 @@ function CartProvider({ children }) {
     }
   };
   const addToCart = (product) => {
-    const { id, title, price, image, amount } = product;
+    const { id, title, price, image } = product;
     const item = [...cart].find((item) => item.id === id);
     if (item) {
       increaseAmount(id);

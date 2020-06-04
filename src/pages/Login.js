@@ -5,7 +5,7 @@ import loginUser from "../strapi/loginUser";
 import registerUser from "../strapi/registerUser";
 export default function Login() {
   const history = useHistory();
-  const { userLogin } = useContext(UserContext);
+  const { userLogin, alert, showAlert, hideAlert } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,8 +36,13 @@ export default function Login() {
       } = response.data;
       const newUser = { token, username };
       userLogin(newUser);
+      showAlert({ msg: `Welcome ${username}, you have now logged in` });
       history.push("/products");
     } else {
+      showAlert({
+        msg: "There was an error. Please try again...",
+        type: "danger",
+      });
     }
   };
 
