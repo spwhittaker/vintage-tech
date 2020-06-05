@@ -11,9 +11,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
-
 import Header from "./components/Header";
 import Alert from "./components/Alert";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   return (
@@ -31,9 +31,9 @@ export default function App() {
         <Route path="/cart">
           <Cart />
         </Route>
-        <Route path="/checkout">
+        <PrivateRoute path="/checkout">
           <Checkout />
-        </Route>
+        </PrivateRoute>
         <Route path="/login">
           <Login />
         </Route>

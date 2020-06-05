@@ -25,13 +25,16 @@ function UserProvider({ children }) {
     msg: "",
     type: "success",
   });
-  const showAlert = ({ msg, type = "success" }) => {
-    setAlert({ show: true, msg, type });
-  };
-
   const hideAlert = () => {
     setAlert({ ...alert, show: false });
   };
+  const showAlert = ({ msg, type = "success", timeout = true }) => {
+    setAlert({ show: true, msg, type });
+    if (timeout) {
+      setTimeout(() => hideAlert(), 6000);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{ user, userLogin, userLogout, alert, showAlert, hideAlert }}

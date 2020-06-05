@@ -5,7 +5,7 @@ import loginUser from "../strapi/loginUser";
 import registerUser from "../strapi/registerUser";
 export default function Login() {
   const history = useHistory();
-  const { userLogin, alert, showAlert, hideAlert } = useContext(UserContext);
+  const { userLogin, alert, showAlert } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
