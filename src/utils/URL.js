@@ -1,1 +1,1 @@
-export default "http://localhost:1337";
+export default "https://vintage-tech-store-project.herokuapp.com";
