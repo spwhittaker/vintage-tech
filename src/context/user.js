@@ -1,5 +1,5 @@
 // user context
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 
 const UserContext = createContext();
 
@@ -11,6 +11,14 @@ function getUserFromLocalStorage() {
 
 function UserProvider({ children }) {
   const [user, setUser] = useState(getUserFromLocalStorage());
+
+  const [height, setHeight] = useState(0);
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setHeight(window.pageYOffset);
+    });
+    return () => window.removeEventListener("scroll", () => {});
+  });
   const userLogin = (user) => {
     setUser(user);
     localStorage.setItem("user", JSON.stringify(user));
@@ -37,7 +45,15 @@ function UserProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ user, userLogin, userLogout, alert, showAlert, hideAlert }}
+      value={{
+        user,
+        userLogin,
+        userLogout,
+        alert,
+        showAlert,
+        hideAlert,
+        height,
+      }}
     >
       {children}
     </UserContext.Provider>
