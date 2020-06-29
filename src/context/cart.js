@@ -1,5 +1,7 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useReducer } from "react";
 //import localCart from "../utils/localCart";
+import reducer from "./reducer";
+
 function getCartFromLocalStorage() {
   return localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
@@ -8,7 +10,7 @@ function getCartFromLocalStorage() {
 const CartContext = createContext();
 
 function CartProvider({ children }) {
-  const [cart, setCart] = useState(getCartFromLocalStorage());
+  const [cart, dispatch] = useReducer(reducer, getCartFromLocalStorage());
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState(0);
 
@@ -28,45 +30,28 @@ function CartProvider({ children }) {
     setTotal(newTotal);
   }, [cart]);
   const removeItem = (id) => {
-    setCart([...cart].filter((item) => item.id !== id));
+    dispatch({ type: "REMOVE", payload: id });
   };
   const increaseAmount = (id) => {
-    setCart(
-      [...cart].map((item) => {
-        if (item.id === id) {
-          item.amount++;
-        }
-        return item;
-      })
-    );
+    dispatch({ type: "INCREASE", payload: id });
   };
   const decreaseAmount = (id, amount) => {
     if (amount === 1) {
-      return removeItem(id);
+      dispatch({ type: "REMOVE", payload: id });
     } else {
-      setCart(
-        [...cart].map((item) => {
-          if (item.id === id && item.amount > 1) {
-            item.amount--;
-          }
-
-          return item;
-        })
-      );
+      dispatch({ type: "DECREASE", payload: id });
     }
   };
   const addToCart = (product) => {
-    const { id, title, price, image } = product;
-    const item = [...cart].find((item) => item.id === id);
+    let item = [...cart].find((item) => item.id === product.id);
     if (item) {
-      increaseAmount(id);
-      return;
+      dispatch({ type: "INCREASE", payload: product.id });
     } else {
-      setCart([...cart, { id, title, price, image, amount: 1 }]);
+      dispatch({ type: "ADDTOCART", payload: product });
     }
   };
   const clearCart = () => {
-    setCart([]);
+    dispatch({ type: "CLEARCART" });
   };
   return (
     <CartContext.Provider
